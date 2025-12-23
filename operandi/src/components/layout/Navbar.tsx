@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Icons } from "@/lib/icons";
 import { Button } from "@/components/ui/Button";
 
@@ -20,11 +21,15 @@ export function Navbar({ variant = "default" }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">O</span>
-            </div>
-            <span className={`text-xl font-bold ${isDark ? "text-white" : "text-gray-900"}`}>Operandi</span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logotexto.png"
+              alt="Operandi"
+              width={140}
+              height={36}
+              className={`h-9 w-auto rounded-3xl object-contain ${isDark ? "brightness-0 invert" : ""}`}
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}

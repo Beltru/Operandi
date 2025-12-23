@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -39,11 +40,15 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold">O</span>
-            </div>
-            <span className="text-2xl font-bold text-gray-900">Operandi</span>
+          <Link href="/" className="flex items-center mb-8">
+            <Image
+              src="/logotexto.png"
+              alt="Operandi"
+              width={160}
+              height={40}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </Link>
 
           <h1 className="text-3xl font-bold text-gray-900 mb-2">

@@ -1,8 +1,12 @@
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useTheme } from "@/context/ThemeContext";
 import { Icons } from "@/lib/icons";
 
 const navigation = [
@@ -21,9 +25,10 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#09090b]' : 'bg-slate-100'}`}>
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -34,35 +39,42 @@ export default function DashboardLayout({
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-white border-r border-gray-100 transform transition-transform lg:translate-x-0 ${
+        className={`fixed top-0 left-0 z-50 h-full w-64 ${theme === 'dark' ? 'bg-[#0f0f12] border-zinc-800' : 'bg-white border-gray-200 shadow-sm'} border-r transform transition-transform lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-gray-100">
+        <div className={`h-16 flex items-center px-6 border-b ${theme === 'dark' ? 'border-zinc-800' : 'border-gray-200'}`}>
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">O</span>
-            </div>
-            <span className="text-xl font-bold text-gray-900">Operandi</span>
+            <Image
+              src="/logotexto.png"
+              alt="Operandi"
+              width={140}
+              height={35}
+              className={`h-8 w-auto object-contain rounded-3xl ${theme === 'dark' ? 'invert' : ''}`}
+              priority
+            />
           </Link>
         </div>
 
         {/* Navigation */}
         <nav className="p-4 space-y-1">
           {navigation.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
             return (
               <Link
                 key={item.name}
                 href={item.href}
+                onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-violet-50 text-violet-700"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    ? "bg-violet-300 text-black dark:bg-violet-500 dark:text-black"
+                    : theme === 'dark'
+                      ? "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                 }`}
               >
-                <span className={isActive ? "text-violet-600" : "text-gray-400"}>
+                <span className={isActive ? "text-violet-600 dark:text-black" : theme === 'dark' ? "text-zinc-500" : "text-gray-400"}>
                   {item.icon}
                 </span>
                 {item.name}
@@ -91,31 +103,31 @@ export default function DashboardLayout({
       {/* Main content */}
       <div className="lg:pl-64">
         {/* Top bar */}
-        <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-4 lg:px-8">
+        <header className={`h-16 ${theme === 'dark' ? 'bg-[#0f0f12] border-zinc-800' : 'bg-white border-gray-200 shadow-sm'} border-b flex items-center justify-between px-4 lg:px-8`}>
           {/* Mobile menu button */}
           <button
-            className="lg:hidden text-gray-600"
+            className={`lg:hidden ${theme === 'dark' ? 'text-zinc-400' : 'text-gray-700'}`}
             onClick={() => setSidebarOpen(true)}
           >
             {Icons.menu}
           </button>
 
           {/* Search */}
-          <div className="hidden sm:flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-2 flex-1 max-w-md ml-4">
-            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className={`hidden sm:flex items-center gap-3 ${theme === 'dark' ? 'bg-zinc-800' : 'bg-slate-100 border border-gray-200'} rounded-xl px-4 py-2 flex-1 max-w-md ml-4`}>
+            <svg className={`w-5 h-5 ${theme === 'dark' ? 'text-zinc-500' : 'text-gray-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
             <input
               type="text"
               placeholder="Buscar leads, campanas..."
-              className="bg-transparent outline-none text-sm flex-1"
+              className={`bg-transparent outline-none text-sm flex-1 ${theme === 'dark' ? 'text-zinc-100 placeholder-zinc-500' : 'text-gray-900 placeholder-gray-500'}`}
             />
           </div>
 
           {/* Right side */}
           <div className="flex items-center gap-4">
             {/* Notifications */}
-            <button className="relative text-gray-500 hover:text-gray-700">
+            <button className={`relative ${theme === 'dark' ? 'text-zinc-400 hover:text-zinc-200' : 'text-gray-500 hover:text-gray-700'}`}>
               {Icons.bell}
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
                 3
@@ -128,8 +140,8 @@ export default function DashboardLayout({
                 JD
               </div>
               <div className="hidden sm:block">
-                <div className="text-sm font-medium text-gray-900">Juan Demo</div>
-                <div className="text-xs text-gray-500">Starter Plan</div>
+                <div className={`text-sm font-medium ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>Juan Demo</div>
+                <div className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-gray-500'}`}>Starter Plan</div>
               </div>
             </div>
           </div>

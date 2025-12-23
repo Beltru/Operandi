@@ -3,6 +3,7 @@
 import { Icons } from "@/lib/icons";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { useTheme } from "@/context/ThemeContext";
 
 const stats = [
   {
@@ -71,13 +72,15 @@ const campaigns = [
 ];
 
 export default function DashboardPage() {
+  const { theme } = useTheme();
+
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-500">Bienvenido de nuevo, Juan</p>
+          <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>Dashboard</h1>
+          <p className={theme === 'dark' ? 'text-zinc-400' : 'text-gray-500'}>Bienvenido de nuevo, Juan</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" size="sm" icon={Icons.calendar}>
@@ -92,32 +95,32 @@ export default function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, i) => (
-          <Card key={i} padding="md">
+          <div key={i} className={`${theme === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-gray-200 shadow-sm'} border rounded-xl p-6`}>
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
-                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                <p className={`text-sm mb-1 ${theme === 'dark' ? 'text-zinc-400' : 'text-gray-500'}`}>{stat.title}</p>
+                <p className={`text-2xl font-bold ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>{stat.value}</p>
                 <p className={`text-sm mt-1 ${stat.changeType === "positive" ? "text-green-600" : "text-red-600"}`}>
                   {stat.change} vs mes anterior
                 </p>
               </div>
-              <div className="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center text-violet-600">
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${theme === 'dark' ? 'bg-violet-900/30 text-violet-400' : 'bg-violet-100 text-violet-600'}`}>
                 {stat.icon}
               </div>
             </div>
-          </Card>
+          </div>
         ))}
       </div>
 
       {/* Charts and Tables Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Chart */}
-        <Card padding="lg" className="lg:col-span-2">
+        <div className={`lg:col-span-2 ${theme === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-gray-200 shadow-sm'} border rounded-xl p-6`}>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">Ventas del Mes</h2>
+            <h2 className={`text-lg font-semibold ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>Ventas del Mes</h2>
             <div className="flex gap-2">
-              <button className="px-3 py-1 text-sm bg-violet-100 text-violet-700 rounded-lg">Ventas</button>
-              <button className="px-3 py-1 text-sm text-gray-500 hover:bg-gray-100 rounded-lg">Leads</button>
+              <button className={`px-3 py-1 text-sm rounded-lg ${theme === 'dark' ? 'bg-violet-900/30 text-violet-400' : 'bg-violet-100 text-violet-700'}`}>Ventas</button>
+              <button className={`px-3 py-1 text-sm rounded-lg ${theme === 'dark' ? 'text-zinc-400 hover:bg-zinc-800' : 'text-gray-500 hover:bg-gray-100'}`}>Leads</button>
             </div>
           </div>
           <div className="h-64 flex items-end justify-between gap-2">
@@ -127,32 +130,32 @@ export default function DashboardPage() {
                   className="w-full bg-gradient-to-t from-violet-500 to-indigo-400 rounded-t-lg transition-all hover:from-violet-600 hover:to-indigo-500"
                   style={{ height: `${height}%` }}
                 ></div>
-                <span className="text-xs text-gray-400">
+                <span className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-gray-400'}`}>
                   {["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][i]}
                 </span>
               </div>
             ))}
           </div>
-        </Card>
+        </div>
 
         {/* Recent Conversations */}
-        <Card padding="lg">
+        <div className={`${theme === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-gray-200 shadow-sm'} border rounded-xl p-6`}>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">Conversaciones</h2>
+            <h2 className={`text-lg font-semibold ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>Conversaciones</h2>
             <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">2 nuevas</span>
           </div>
           <div className="space-y-4">
             {recentConversations.map((conv, i) => (
-              <div key={i} className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 cursor-pointer">
-                <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 shrink-0">
+              <div key={i} className={`flex items-start gap-3 p-3 rounded-xl cursor-pointer ${theme === 'dark' ? 'hover:bg-zinc-800' : 'hover:bg-gray-50'}`}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${theme === 'dark' ? 'bg-zinc-700 text-zinc-400' : 'bg-gray-200 text-gray-500'}`}>
                   {Icons.chat}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-gray-900 text-sm">{conv.name}</span>
-                    <span className="text-xs text-gray-400">{conv.time}</span>
+                    <span className={`font-medium text-sm ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>{conv.name}</span>
+                    <span className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-gray-400'}`}>{conv.time}</span>
                   </div>
-                  <p className="text-sm text-gray-500 truncate">{conv.message}</p>
+                  <p className={`text-sm truncate ${theme === 'dark' ? 'text-zinc-400' : 'text-gray-500'}`}>{conv.message}</p>
                 </div>
                 {conv.unread && (
                   <div className="w-2 h-2 bg-violet-600 rounded-full shrink-0 mt-2"></div>
@@ -163,37 +166,37 @@ export default function DashboardPage() {
           <button className="w-full mt-4 text-sm text-violet-600 hover:text-violet-700 font-medium">
             Ver todas las conversaciones
           </button>
-        </Card>
+        </div>
       </div>
 
       {/* Recent Leads and Campaigns */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Leads */}
-        <Card padding="lg">
+        <div className={`${theme === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-gray-200 shadow-sm'} border rounded-xl p-6`}>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">Leads Recientes</h2>
+            <h2 className={`text-lg font-semibold ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>Leads Recientes</h2>
             <button className="text-sm text-violet-600 hover:text-violet-700 font-medium">Ver todos</button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="text-left text-xs text-gray-500 border-b border-gray-100">
+                <tr className={`text-left text-xs border-b ${theme === 'dark' ? 'text-zinc-400 border-zinc-700' : 'text-gray-500 border-gray-200'}`}>
                   <th className="pb-3 font-medium">Nombre</th>
                   <th className="pb-3 font-medium">Origen</th>
                   <th className="pb-3 font-medium">Estado</th>
                   <th className="pb-3 font-medium">Tiempo</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className={`divide-y ${theme === 'dark' ? 'divide-zinc-800' : 'divide-gray-100'}`}>
                 {recentLeads.map((lead, i) => (
-                  <tr key={i} className="hover:bg-gray-50 cursor-pointer">
+                  <tr key={i} className={`cursor-pointer ${theme === 'dark' ? 'hover:bg-zinc-800' : 'hover:bg-gray-50'}`}>
                     <td className="py-3">
                       <div>
-                        <div className="font-medium text-gray-900 text-sm">{lead.name}</div>
-                        <div className="text-xs text-gray-500">{lead.email}</div>
+                        <div className={`font-medium text-sm ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>{lead.name}</div>
+                        <div className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-gray-500'}`}>{lead.email}</div>
                       </div>
                     </td>
-                    <td className="py-3 text-sm text-gray-600">{lead.source}</td>
+                    <td className={`py-3 text-sm ${theme === 'dark' ? 'text-zinc-300' : 'text-gray-600'}`}>{lead.source}</td>
                     <td className="py-3">
                       <span className={`text-xs px-2 py-1 rounded-full ${
                         lead.status === "Nuevo" ? "bg-blue-100 text-blue-700" :
@@ -204,23 +207,23 @@ export default function DashboardPage() {
                         {lead.status}
                       </span>
                     </td>
-                    <td className="py-3 text-sm text-gray-400">{lead.time}</td>
+                    <td className={`py-3 text-sm ${theme === 'dark' ? 'text-zinc-500' : 'text-gray-400'}`}>{lead.time}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </Card>
+        </div>
 
         {/* Campaigns */}
-        <Card padding="lg">
+        <div className={`${theme === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-gray-200 shadow-sm'} border rounded-xl p-6`}>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">Campanas Activas</h2>
+            <h2 className={`text-lg font-semibold ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>Campanas Activas</h2>
             <button className="text-sm text-violet-600 hover:text-violet-700 font-medium">Gestionar</button>
           </div>
           <div className="space-y-4">
             {campaigns.map((campaign, i) => (
-              <div key={i} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+              <div key={i} className={`flex items-center justify-between p-4 rounded-xl ${theme === 'dark' ? 'bg-zinc-800' : 'bg-slate-50'}`}>
                 <div className="flex items-center gap-4">
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                     campaign.platform === "Meta" ? "bg-blue-100 text-blue-600" :
@@ -230,16 +233,16 @@ export default function DashboardPage() {
                     {campaign.platform[0]}
                   </div>
                   <div>
-                    <div className="font-medium text-gray-900 text-sm">{campaign.name}</div>
-                    <div className="text-xs text-gray-500">{campaign.platform} Ads</div>
+                    <div className={`font-medium text-sm ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>{campaign.name}</div>
+                    <div className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-gray-500'}`}>{campaign.platform} Ads</div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-medium text-gray-900 text-sm">{campaign.spend}</div>
-                  <div className="text-xs text-gray-500">{campaign.leads} leads</div>
+                  <div className={`font-medium text-sm ${theme === 'dark' ? 'text-zinc-100' : 'text-gray-900'}`}>{campaign.spend}</div>
+                  <div className={`text-xs ${theme === 'dark' ? 'text-zinc-500' : 'text-gray-500'}`}>{campaign.leads} leads</div>
                 </div>
                 <span className={`text-xs px-2 py-1 rounded-full ${
-                  campaign.status === "Activa" ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-600"
+                  campaign.status === "Activa" ? "bg-green-100 text-green-700" : theme === 'dark' ? "bg-zinc-700 text-zinc-400" : "bg-gray-200 text-gray-600"
                 }`}>
                   {campaign.status}
                 </span>
@@ -249,11 +252,11 @@ export default function DashboardPage() {
           <Button variant="outline" fullWidth className="mt-4">
             Crear Nueva Campana
           </Button>
-        </Card>
+        </div>
       </div>
 
       {/* Quick Actions */}
-      <Card padding="lg" className="bg-gradient-to-r from-violet-600 to-indigo-600 border-0">
+      <div className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-xl p-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-white text-center sm:text-left">
             <h3 className="text-xl font-bold mb-2">Configura tu chatbot de WhatsApp</h3>
@@ -263,7 +266,7 @@ export default function DashboardPage() {
             Configurar Ahora
           </Button>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }
