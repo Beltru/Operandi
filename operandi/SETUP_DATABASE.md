@@ -49,8 +49,8 @@ DATABASE_URL="postgresql://postgres.xxx:[PASSWORD]@aws-0-us-west-2.pooler.supaba
 DIRECT_URL="postgresql://postgres.xxx:[PASSWORD]@aws-0-us-west-2.pooler.supabase.com:5432/postgres"
 
 # Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+NEXT_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 **Importante:**

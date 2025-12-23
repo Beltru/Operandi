@@ -95,8 +95,8 @@ Edita `.env` con tus credenciales de Supabase:
 ```env
 DATABASE_URL="postgresql://..."
 DIRECT_URL="postgresql://..."
-NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
+NEXT_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_SUPABASE_ANON_KEY=tu-anon-key
 ```
 
 4. Ejecuta las migraciones de Prisma:
