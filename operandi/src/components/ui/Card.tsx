@@ -23,8 +23,8 @@ export function Card({
   return (
     <div
       className={`
-        bg-white rounded-2xl border border-gray-100 shadow-sm
-        ${hover ? "hover:shadow-xl transition-shadow" : ""}
+        bg-white rounded-2xl border border-gray-200 shadow-sm
+        ${hover ? "hover:shadow-lg hover:border-gray-300 transition-all" : ""}
         ${paddings[padding]}
         ${className}
       `}

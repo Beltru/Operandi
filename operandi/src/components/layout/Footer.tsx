@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Icons } from "@/lib/icons";
 
 export function Footer() {
@@ -8,11 +9,14 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">O</span>
-              </div>
-              <span className="text-xl font-bold text-white">Operandi</span>
+            <Link href="/" className="flex items-center mb-4">
+              <Image
+                src="/logotexto.png"
+                alt="Operandi"
+                width={140}
+                height={36}
+                className="h-9 w-auto rounded-3xl object-contain invert"
+              />
             </Link>
             <p className="text-sm mb-6">
               Transformando negocios con inteligencia artificial.
@@ -39,9 +43,9 @@ export function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Empresa</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Sobre Nosotros</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Carreras</a></li>
+              <li><Link href="/sobre-nosotros" className="hover:text-white transition-colors">Sobre Nosotros</Link></li>
+              <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+              <li><Link href="/carreras" className="hover:text-white transition-colors">Carreras</Link></li>
               <li><Link href="/contacto" className="hover:text-white transition-colors">Contacto</Link></li>
             </ul>
           </div>
@@ -50,10 +54,10 @@ export function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Legal</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Privacidad</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terminos</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Cookies</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Seguridad</a></li>
+              <li><Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link></li>
+              <li><Link href="/terminos" className="hover:text-white transition-colors">Terminos</Link></li>
+              <li><Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link></li>
+              <li><Link href="/seguridad" className="hover:text-white transition-colors">Seguridad</Link></li>
             </ul>
           </div>
         </div>
@@ -63,8 +67,8 @@ export function Footer() {
             {new Date().getFullYear()} Operandi. Todos los derechos reservados.
           </div>
           <div className="flex gap-6 text-sm">
-            <a href="#" className="hover:text-white transition-colors">Politica de Privacidad</a>
-            <a href="#" className="hover:text-white transition-colors">Terminos de Servicio</a>
+            <Link href="/privacidad" className="hover:text-white transition-colors">Politica de Privacidad</Link>
+            <Link href="/terminos" className="hover:text-white transition-colors">Terminos de Servicio</Link>
           </div>
         </div>
       </div>
