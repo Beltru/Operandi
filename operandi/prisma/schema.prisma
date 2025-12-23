@@ -1,0 +1,418 @@
+// Prisma schema for Operandi SaaS Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ====================================
+// USERS & AUTHENTICATION
+// ====================================
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  nombre        String
+  apellido      String
+  telefono      String?
+  avatar_url    String?
+  rol           UserRole  @default(USER)
+  activo        Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  last_login    DateTime?
+
+  // Relations
+  organizacion_id String?
+  organizacion    Organizacion? @relation(fields: [organizacion_id], references: [id], onDelete: SetNull)
+
+  notificaciones  Notificacion[]
+  conversaciones  Conversacion[]
+  leads_asignados Lead[]
+
+  @@index([email])
+  @@index([organizacion_id])
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  VIEWER
+}
+
+// ====================================
+// ORGANIZATIONS & SUBSCRIPTIONS
+// ====================================
+
+model Organizacion {
+  id                String   @id @default(uuid())
+  nombre            String
+  industria         Industria
+  sitio_web         String?
+  telefono          String?
+  direccion         String?
+  logo_url          String?
+  activa            Boolean  @default(true)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  // Subscription info
+  plan_id           String?
+  fecha_inicio_plan DateTime?
+  fecha_fin_plan    DateTime?
+  estado_suscripcion EstadoSuscripcion @default(TRIAL)
+
+  // Relations
+  plan              Plan?         @relation(fields: [plan_id], references: [id])
+  usuarios          User[]
+  leads             Lead[]
+  campañas          Campaña[]
+  configuraciones   ConfiguracionBot[]
+  conversaciones    Conversacion[]
+
+  @@index([plan_id])
+  @@index([estado_suscripcion])
+  @@map("organizaciones")
+}
+
+enum Industria {
+  INMOBILIARIA
+  ECOMMERCE
+  SERVICIOS
+  TECNOLOGIA
+  SALUD
+  EDUCACION
+  OTRO
+}
+
+enum EstadoSuscripcion {
+  TRIAL
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  EXPIRED
+}
+
+model Plan {
+  id              String   @id @default(uuid())
+  nombre          String   @unique
+  descripcion     String?
+  precio_mensual  Decimal  @db.Decimal(10, 2)
+  precio_anual    Decimal  @db.Decimal(10, 2)
+  max_usuarios    Int
+  max_leads       Int
+  max_campañas    Int
+  tiene_chatbot   Boolean  @default(true)
+  tiene_crm       Boolean  @default(true)
+  tiene_anuncios  Boolean  @default(false)
+  tiene_analytics Boolean  @default(false)
+  soporte         TipoSoporte @default(EMAIL)
+  activo          Boolean  @default(true)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  // Relations
+  organizaciones  Organizacion[]
+
+  @@map("planes")
+}
+
+enum TipoSoporte {
+  EMAIL
+  CHAT
+  PRIORITARIO
+}
+
+// ====================================
+// LEADS & CRM
+// ====================================
+
+model Lead {
+  id              String      @id @default(uuid())
+  nombre          String
+  email           String?
+  telefono        String?
+  empresa         String?
+  cargo           String?
+  origen          OrigenLead
+  estado          EstadoLead  @default(NUEVO)
+  puntuacion      Int?        @default(0)
+  presupuesto     Decimal?    @db.Decimal(10, 2)
+  notas           String?     @db.Text
+  etiquetas       String[]
+  ultima_interaccion DateTime?
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+
+  // Relations
+  organizacion_id String
+  organizacion    Organizacion @relation(fields: [organizacion_id], references: [id], onDelete: Cascade)
+
+  asignado_a_id   String?
+  asignado_a      User?        @relation(fields: [asignado_a_id], references: [id], onDelete: SetNull)
+
+  conversaciones  Conversacion[]
+  actividades     ActividadLead[]
+
+  @@index([organizacion_id])
+  @@index([estado])
+  @@index([origen])
+  @@index([asignado_a_id])
+  @@index([created_at])
+  @@map("leads")
+}
+
+enum OrigenLead {
+  CHATBOT_WEB
+  CHATBOT_WHATSAPP
+  CHATBOT_INSTAGRAM
+  FORMULARIO_WEB
+  CAMPAÑA_META
+  CAMPAÑA_GOOGLE
+  CAMPAÑA_TIKTOK
+  REFERIDO
+  MANUAL
+}
+
+enum EstadoLead {
+  NUEVO
+  CONTACTADO
+  CALIFICADO
+  PROPUESTA
+  NEGOCIACION
+  GANADO
+  PERDIDO
+  DESCARTADO
+}
+
+model ActividadLead {
+  id          String           @id @default(uuid())
+  lead_id     String
+  tipo        TipoActividad
+  titulo      String
+  descripcion String?          @db.Text
+  fecha       DateTime         @default(now())
+  created_at  DateTime         @default(now())
+
+  // Relations
+  lead        Lead             @relation(fields: [lead_id], references: [id], onDelete: Cascade)
+
+  @@index([lead_id])
+  @@index([fecha])
+  @@map("actividades_lead")
+}
+
+enum TipoActividad {
+  LLAMADA
+  EMAIL
+  REUNION
+  NOTA
+  TAREA
+  MENSAJE_CHATBOT
+}
+
+// ====================================
+// CHATBOT & CONVERSATIONS
+// ====================================
+
+model ConfiguracionBot {
+  id                String   @id @default(uuid())
+  organizacion_id   String   @unique
+  nombre_bot        String   @default("Asistente IA")
+  mensaje_bienvenida String  @db.Text
+  tono              TonoBot  @default(PROFESIONAL)
+  idioma            String   @default("es")
+  activo_whatsapp   Boolean  @default(false)
+  activo_web        Boolean  @default(true)
+  activo_instagram  Boolean  @default(false)
+  horario_inicio    String?  @default("09:00")
+  horario_fin       String?  @default("18:00")
+  respuesta_fuera_horario String? @db.Text
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  // Relations
+  organizacion      Organizacion @relation(fields: [organizacion_id], references: [id], onDelete: Cascade)
+
+  @@map("configuracion_bot")
+}
+
+enum TonoBot {
+  FORMAL
+  PROFESIONAL
+  AMIGABLE
+  CASUAL
+}
+
+model Conversacion {
+  id              String      @id @default(uuid())
+  canal           CanalConversacion
+  estado          EstadoConversacion @default(ACTIVA)
+  lead_id         String?
+  organizacion_id String
+  asignado_a_id   String?
+  ultima_actividad DateTime   @default(now())
+  resuelto        Boolean     @default(false)
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+
+  // Relations
+  lead            Lead?        @relation(fields: [lead_id], references: [id], onDelete: SetNull)
+  organizacion    Organizacion @relation(fields: [organizacion_id], references: [id], onDelete: Cascade)
+  asignado_a      User?        @relation(fields: [asignado_a_id], references: [id], onDelete: SetNull)
+
+  mensajes        Mensaje[]
+
+  @@index([organizacion_id])
+  @@index([lead_id])
+  @@index([estado])
+  @@index([canal])
+  @@index([ultima_actividad])
+  @@map("conversaciones")
+}
+
+enum CanalConversacion {
+  WEB
+  WHATSAPP
+  INSTAGRAM
+  EMAIL
+}
+
+enum EstadoConversacion {
+  ACTIVA
+  PENDIENTE
+  RESUELTA
+  CERRADA
+}
+
+model Mensaje {
+  id              String       @id @default(uuid())
+  conversacion_id String
+  contenido       String       @db.Text
+  es_bot          Boolean      @default(false)
+  es_usuario      Boolean      @default(false)
+  metadata        Json?
+  leido           Boolean      @default(false)
+  created_at      DateTime     @default(now())
+
+  // Relations
+  conversacion    Conversacion @relation(fields: [conversacion_id], references: [id], onDelete: Cascade)
+
+  @@index([conversacion_id])
+  @@index([created_at])
+  @@map("mensajes")
+}
+
+// ====================================
+// ADVERTISING CAMPAIGNS
+// ====================================
+
+model Campaña {
+  id              String         @id @default(uuid())
+  nombre          String
+  plataforma      PlataformaCampaña
+  estado          EstadoCampaña  @default(BORRADOR)
+  presupuesto_diario Decimal?    @db.Decimal(10, 2)
+  presupuesto_total  Decimal?    @db.Decimal(10, 2)
+  fecha_inicio    DateTime?
+  fecha_fin       DateTime?
+  objetivo        ObjetivoCampaña
+  audiencia       Json?
+  creatividades   Json?
+  metricas        Json?
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+
+  // Relations
+  organizacion_id String
+  organizacion    Organizacion   @relation(fields: [organizacion_id], references: [id], onDelete: Cascade)
+
+  @@index([organizacion_id])
+  @@index([plataforma])
+  @@index([estado])
+  @@index([fecha_inicio])
+  @@map("campañas")
+}
+
+enum PlataformaCampaña {
+  META
+  GOOGLE
+  TIKTOK
+}
+
+enum EstadoCampaña {
+  BORRADOR
+  PROGRAMADA
+  ACTIVA
+  PAUSADA
+  COMPLETADA
+  CANCELADA
+}
+
+enum ObjetivoCampaña {
+  TRAFICO
+  CONVERSIONES
+  LEADS
+  ALCANCE
+  ENGAGEMENT
+  VENTAS
+}
+
+// ====================================
+// NOTIFICATIONS
+// ====================================
+
+model Notificacion {
+  id          String             @id @default(uuid())
+  tipo        TipoNotificacion
+  titulo      String
+  mensaje     String             @db.Text
+  leida       Boolean            @default(false)
+  accionada   Boolean            @default(false)
+  fecha_accion DateTime?
+  created_at  DateTime           @default(now())
+
+  // Relations
+  user_id     String
+  user        User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@index([leida])
+  @@index([tipo])
+  @@index([created_at])
+  @@map("notificaciones")
+}
+
+enum TipoNotificacion {
+  NUEVO_LEAD
+  MENSAJE_CHATBOT
+  CAMPAÑA_COMPLETADA
+  SUSCRIPCION_EXPIRA
+  LEAD_CALIENTE
+  TAREA_PENDIENTE
+}
+
+// ====================================
+// ANALYTICS
+// ====================================
+
+model MetricaDiaria {
+  id                    String   @id @default(uuid())
+  fecha                 DateTime @unique
+  total_leads           Int      @default(0)
+  leads_nuevos          Int      @default(0)
+  leads_convertidos     Int      @default(0)
+  conversaciones_activas Int     @default(0)
+  mensajes_bot          Int      @default(0)
+  campañas_activas      Int      @default(0)
+  gasto_publicidad      Decimal  @default(0) @db.Decimal(10, 2)
+  ingresos_generados    Decimal  @default(0) @db.Decimal(10, 2)
+  created_at            DateTime @default(now())
+
+  @@index([fecha])
+  @@map("metricas_diarias")
+}

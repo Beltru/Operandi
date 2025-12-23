@@ -3,12 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/providers/AuthProvider";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Icons } from "@/lib/icons";
 
 export default function RegistroPage() {
   const router = useRouter();
+  const { signUp, signInWithGoogle, user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     nombre: "",
@@ -19,23 +21,70 @@ export default function RegistroPage() {
     telefono: "",
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Redirigir si ya está autenticado
+  if (user && !authLoading) {
+    router.push("/dashboard");
+    return null;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
     if (step === 1) {
+      // Validar paso 1
+      if (formData.password.length < 8) {
+        setError("La contraseña debe tener al menos 8 caracteres");
+        return;
+      }
       setStep(2);
       return;
     }
 
+    // Paso 2: Crear cuenta
     setLoading(true);
-    // Simular registro
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    router.push("/dashboard");
+
+    try {
+      // Preparar metadata del usuario
+      const fullName = formData.nombre;
+      const [nombre, ...apellidoArray] = fullName.split(" ");
+      const apellido = apellidoArray.join(" ") || "";
+
+      const { error: signUpError } = await signUp(
+        formData.email,
+        formData.password,
+        fullName
+      );
+
+      if (signUpError) {
+        setError(signUpError.message || "Error al crear la cuenta");
+        setLoading(false);
+        return;
+      }
+
+      // TODO: Guardar datos adicionales (empresa, industria, teléfono) en la tabla users/organizacion
+      // Por ahora solo creamos el usuario en auth.users
+
+      // Redirigir al dashboard
+      router.push("/dashboard");
+    } catch (err) {
+      setError("Ocurrió un error inesperado");
+      setLoading(false);
+    }
   };
 
-  const handleGoogleSignup = () => {
-    console.log("Google signup");
+  const handleGoogleSignup = async () => {
+    try {
+      const { error: googleError } = await signInWithGoogle();
+      if (googleError) {
+        setError(googleError.message || "Error al registrarse con Google");
+      }
+      // La redirección la maneja el callback de OAuth
+    } catch (err) {
+      setError("Error al registrarse con Google");
+    }
   };
 
   return (
@@ -162,6 +211,12 @@ export default function RegistroPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
+            {error && (
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                {error}
+              </div>
+            )}
+
             {step === 1 ? (
               <>
                 <Input

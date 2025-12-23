@@ -3,12 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/providers/AuthProvider";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Icons } from "@/lib/icons";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { signIn, signInWithGoogle, user, loading: authLoading } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,21 +18,44 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Redirigir si ya está autenticado
+  if (user && !authLoading) {
+    router.push("/dashboard");
+    return null;
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    // Simular autenticacion
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const { error: signInError } = await signIn(formData.email, formData.password);
 
-    // Por ahora, redirigir al dashboard
-    router.push("/dashboard");
+      if (signInError) {
+        setError(signInError.message || "Error al iniciar sesión");
+        setLoading(false);
+        return;
+      }
+
+      // Redirigir al dashboard
+      router.push("/dashboard");
+    } catch (err) {
+      setError("Ocurrió un error inesperado");
+      setLoading(false);
+    }
   };
 
-  const handleGoogleLogin = () => {
-    // Implementar OAuth con Google
-    console.log("Google login");
+  const handleGoogleLogin = async () => {
+    try {
+      const { error: googleError } = await signInWithGoogle();
+      if (googleError) {
+        setError(googleError.message || "Error al iniciar sesión con Google");
+      }
+      // La redirección la maneja el callback de OAuth
+    } catch (err) {
+      setError("Error al iniciar sesión con Google");
+    }
   };
 
   return (
