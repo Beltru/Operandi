@@ -66,6 +66,10 @@ model Organizacion {
   fecha_fin_plan    DateTime?
   estado_suscripcion EstadoSuscripcion @default(TRIAL)
 
+  // Lemon Squeezy integration
+  lemon_squeezy_customer_id     String?  @unique
+  lemon_squeezy_subscription_id String?  @unique
+
   // Relations
   plan              Plan?         @relation(fields: [plan_id], references: [id])
   usuarios          User[]
@@ -114,6 +118,10 @@ model Plan {
   activo          Boolean  @default(true)
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
+
+  // Lemon Squeezy integration
+  lemon_squeezy_product_id String?
+  lemon_squeezy_variant_id String?  @unique
 
   // Relations
   organizaciones  Organizacion[]
