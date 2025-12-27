@@ -155,18 +155,30 @@ const Home: React.FC = () => {
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-1">
-              <a href="#automatizaciones" className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+              <button
+                onClick={() => document.getElementById('automatizaciones')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+              >
                 Soluciones
-              </a>
-              <a href="#proceso" className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+              </button>
+              <button
+                onClick={() => document.getElementById('proceso')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+              >
                 Cómo Funciona
-              </a>
-              <a href="#casos" className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+              </button>
+              <button
+                onClick={() => document.getElementById('casos')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+              >
                 Casos de Éxito
-              </a>
-              <a href="#faq" className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+              </button>
+              <button
+                onClick={() => document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+              >
                 FAQ
-              </a>
+              </button>
             </nav>
 
             {/* CTA Buttons */}
@@ -206,18 +218,30 @@ const Home: React.FC = () => {
           {mobileMenuOpen && (
             <div className="lg:hidden py-4 border-t border-gray-100 animate-fade-in-up">
               <nav className="flex flex-col gap-2">
-                <a href="#automatizaciones" className="px-4 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-lg">
+                <button
+                  onClick={() => { document.getElementById('automatizaciones')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }}
+                  className="px-4 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-lg text-left"
+                >
                   Soluciones
-                </a>
-                <a href="#proceso" className="px-4 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-lg">
+                </button>
+                <button
+                  onClick={() => { document.getElementById('proceso')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }}
+                  className="px-4 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-lg text-left"
+                >
                   Cómo Funciona
-                </a>
-                <a href="#casos" className="px-4 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-lg">
+                </button>
+                <button
+                  onClick={() => { document.getElementById('casos')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }}
+                  className="px-4 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-lg text-left"
+                >
                   Casos de Éxito
-                </a>
-                <a href="#faq" className="px-4 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-lg">
+                </button>
+                <button
+                  onClick={() => { document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }}
+                  className="px-4 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-lg text-left"
+                >
                   FAQ
-                </a>
+                </button>
                 <div className="pt-4 mt-2 border-t border-gray-100">
                   <button
                     onClick={() => { setCalendlyOpen(true); setMobileMenuOpen(false); }}
