@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: operandi
+      POSTGRES_PASSWORD: operandi_password
+      POSTGRES_DB: operandi_reply
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  operandi-reply:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DATABASE_URL=postgresql://operandi:operandi_password@postgres:5432/operandi_reply?schema=public
+      - NODE_ENV=production
+    depends_on:
+      - redis
+      - postgres
+
+volumes:
+  redis_data:
+  postgres_data:

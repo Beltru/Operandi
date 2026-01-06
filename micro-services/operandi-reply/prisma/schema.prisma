@@ -1,0 +1,57 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// 1. Users (Sellers)
+model User {
+    id             String   @id @default(uuid())
+    email          String   @unique
+    mercadoLibreId String   @unique // MELI user_id
+    accessToken    String // Encrypted ideally
+    refreshToken   String
+    tokenExpiresAt DateTime
+
+    // Configuration
+    isActive         Boolean @default(true)
+    autoReplyEnabled Boolean @default(true)
+
+    // Relations
+    questions Question[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+// 2. Questions History
+model Question {
+    id         String @id // MELI Question ID (from webhook)
+    resourceId String // Publication ID (MLA-123456)
+    text       String
+
+    // Relationships
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+
+    // AI Response Data
+    aiResponse String?
+    status     ResponseStatus @default(PENDING)
+
+    // Metadata
+    contextUsed String? // What item data the AI saw
+
+    createdAt  DateTime  @default(now())
+    answeredAt DateTime?
+}
+
+enum ResponseStatus {
+    PENDING // Received, waiting for worker
+    PROCESSED // AI generated answer
+    SENT // Posted to MELI
+    FAILED // Error
+    SKIPPED // Rule (e.g. Complaint)
+}
