@@ -12,34 +12,54 @@ const Home: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Features for carousel
-  const features = [
+const features = [
     {
-      title: 'Recuperación de Carritos',
-      subtitle: 'Recuperá ventas perdidas automáticamente',
-      description: 'Detectamos carritos abandonados y enviamos mensajes personalizados por WhatsApp en el momento justo.',
+      title: 'WhatsApp Intelligent Agent',
+      subtitle: 'Ventas y Atención 24/7',
+      description: 'Convertimos tu WhatsApp Business en una máquina de atención autónoma. Clasificación de leads, respuestas instantáneas y gestión de turnos sin intervención humana.',
       color: 'bg-emerald-100',
-      accent: 'text-emerald-600'
+      accent: 'text-emerald-600',
+      metrics: [
+        { label: 'Disponibilidad', value: '24/7', description: 'Sin feriados ni vacaciones' },
+        { label: 'Tiempo de respuesta', value: '< 30 seg', description: 'Respuesta automática instantánea' },
+        { label: 'Capacidad', value: '∞', description: 'Conversaciones simultáneas ilimitadas' }
+      ]
     },
     {
-      title: 'Bot de Mercado Libre',
-      subtitle: 'Vendé 24/7 sin intervención',
-      description: 'IA que responde preguntas de clientes en segundos, consulta stock y cierra ventas mientras dormís.',
+      title: 'Reputación Local AI',
+      subtitle: 'Dominio de Google My Business',
+      description: 'Gestión automatizada de reseñas con IA. Respondemos cada comentario con enfoque en SEO local para escalar posiciones en Google Maps y atraer más clientes físicos.',
       color: 'bg-purple-100',
-      accent: 'text-purple-600'
+      accent: 'text-purple-600',
+      metrics: [
+        { label: 'Boost SEO Local', value: '+40%', description: 'Mejora en ranking de Maps' },
+        { label: 'Engagement', value: '100%', description: 'Todas las reseñas respondidas' },
+        { label: 'Tiempo ahorrado', value: '15h/mes', description: 'Gestión automatizada completa' }
+      ]
     },
     {
-      title: 'Seguimiento Logístico',
-      subtitle: 'Eliminá tickets de "¿Dónde está mi pedido?"',
-      description: 'Respuestas automáticas con el estado real del envío directo desde Mercado Envíos o Andreani.',
+      title: 'Prospección Automática',
+      subtitle: 'Maquinaria de Prospección B2B',
+      description: 'Llenamos tu agenda de reuniones calificadas. Nuestro motor identifica, califica y contacta prospectos con mensajes hiper-personalizados que generan respuestas reales.',
       color: 'bg-blue-100',
-      accent: 'text-blue-600'
+      accent: 'text-blue-600',
+      metrics: [
+        { label: 'Tasa de respuesta', value: '25-35%', description: 'vs 2-5% del outreach tradicional' },
+        { label: 'Precisión', value: '90%', description: 'Leads calificados automáticamente' },
+        { label: 'Escalabilidad', value: '500+', description: 'Contactos personalizados por día' }
+      ]
     },
     {
-      title: 'Pagos Fallidos',
-      subtitle: 'Recuperá ventas por problemas de pago',
-      description: 'Detectamos rechazos, explicamos el problema al cliente y ofrecemos alternativas de pago.',
+      title: 'Revenue Recovery',
+      subtitle: 'Recuperación de Pagos Fallidos',
+      description: 'No pierdas ni un centavo por fricciones en el checkout. Detectamos rechazos de pagos en tiempo real y actuamos con flujos de recuperación para rescatar tu facturación.',
       color: 'bg-red-100',
-      accent: 'text-red-600'
+      accent: 'text-red-600',
+      metrics: [
+        { label: 'Recuperación promedio', value: '40-60%', description: 'De pagos inicialmente rechazados' },
+        { label: 'Tiempo de acción', value: '< 1 min', description: 'Detección y contacto automático' },
+        { label: 'ROI directo', value: '$$$', description: 'Facturación que se iba a perder' }
+      ]
     }
   ];
 
@@ -109,35 +129,35 @@ const Home: React.FC = () => {
 
   // Use cases with SVG icons
   const useCases = [
-    { icon: 'cart', title: 'Recuperar carritos abandonados', desc: 'WhatsApp automático a los 30 min' },
-    { icon: 'bot', title: 'Responder preguntas 24/7', desc: 'Bot de IA para Mercado Libre' },
-    { icon: 'package', title: 'Informar estado de envíos', desc: 'Tracking automático por WhatsApp' },
-    { icon: 'creditCard', title: 'Recuperar pagos fallidos', desc: 'Mensajes con alternativas de pago' },
-    { icon: 'gift', title: 'Fidelizar post-compra', desc: 'Bienvenida + cupón de recompra' },
-    { icon: 'star', title: 'Conseguir más reseñas', desc: 'Solicitud automática a los 7 días' },
-    { icon: 'chart', title: 'Analizar fricciones', desc: 'Auditoría personalizada de tu tienda' },
-    { icon: 'link', title: 'Integrar plataformas', desc: 'TiendaNube, Shopify, ML, WhatsApp' }
+    { icon: 'headphones', title: 'Atención al cliente 24/7', desc: 'Respuestas automáticas inteligentes' },
+    { icon: 'bolt', title: 'Calificación de leads', desc: 'Filtrado automático de oportunidades' },
+    { icon: 'message', title: 'Seguimiento de clientes', desc: 'Mensajes personalizados y recordatorios' },
+    { icon: 'cart', title: 'Recuperación de ventas', desc: 'Carritos, citas y oportunidades perdidas' },
+    { icon: 'user', title: 'Onboarding automatizado', desc: 'Bienvenida y capacitación de clientes' },
+    { icon: 'package', title: 'Gestión de operaciones', desc: 'Actualizaciones de estado automáticas' },
+    { icon: 'chart', title: 'Reportes y análisis', desc: 'Dashboard personalizado de métricas' },
+    { icon: 'link', title: 'Integraciones a medida', desc: 'Conectamos con tus herramientas' }
   ];
 
   // Testimonials
   const testimonials = [
     {
-      quote: 'Recuperamos $47,000 en el primer mes solo con el flujo de carritos abandonados.',
-      author: 'María González',
-      role: 'Fundadora',
-      company: 'Tienda de Moda BA'
-    },
-    {
-      quote: 'El bot de Mercado Libre responde en segundos. Antes tardábamos horas.',
-      author: 'Carlos Ruiz',
-      role: 'E-commerce Manager',
-      company: 'ElectroStore'
-    },
-    {
-      quote: 'Reducimos un 60% los tickets de soporte automatizando el tracking.',
-      author: 'Laura Méndez',
+      quote: 'Redujimos el tiempo de respuesta de 4 horas a 30 segundos. Nuestros clientes están más felices.',
+      author: 'Francisco Rodriguez Moyano',
       role: 'CEO',
-      company: 'HomeDecor AR'
+      company: 'RMA'
+    },
+    {
+      quote: 'La IA califica leads automáticamente. Nuestro equipo comercial solo habla con oportunidades reales.',
+      author: 'Alejandra Daniel',
+      role: 'Director Comercial',
+      company: 'JRA (Justicia Restaurativa Argentina)'
+    },
+    {
+      quote: 'Automatizamos el onboarding de clientes. Lo que tomaba 2 semanas ahora toma 2 días.',
+      author: 'Diego Correa',
+      role: 'Productor de Seguros',
+      company: ''
     }
   ];
 
@@ -257,12 +277,12 @@ const Home: React.FC = () => {
       </header>
 
       <main>
-        {/* Hero Section - Notion style */}
-        <section className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden">
+        {/* Hero Section - Full Screen */}
+        <section className="relative min-h-screen flex items-center overflow-hidden">
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-orange-50/50 via-white to-white pointer-events-none" />
 
-          <div className="relative max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="relative w-full max-w-7xl mx-auto px-4 lg:px-8 py-16">
             <div className="max-w-4xl mx-auto text-center">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-700 text-sm font-medium mb-8">
@@ -275,7 +295,7 @@ const Home: React.FC = () => {
 
               {/* Main headline */}
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-6">
-                Un e-commerce.
+                Tu negocio.
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-purple-600">
                   Cero trabajo manual.
@@ -284,7 +304,7 @@ const Home: React.FC = () => {
 
               {/* Subheadline */}
               <p className="text-xl lg:text-2xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-                Automatizamos los procesos que te roban tiempo: carritos abandonados, preguntas repetitivas, seguimiento de envíos.
+                Analizamos tus procesos, identificamos fricciones y construimos automatizaciones de IA a medida.
                 <strong className="text-gray-900"> Vos enfocate en crecer.</strong>
               </p>
 
@@ -309,27 +329,6 @@ const Home: React.FC = () => {
                 </a>
               </div>
             </div>
-
-            {/* Hero Image/Video Placeholder */}
-            <div className="mt-16 lg:mt-20 relative">
-              <div className="aspect-video max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-200 shadow-2xl overflow-hidden">
-                {/* Placeholder for video/image */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-white shadow-lg flex items-center justify-center">
-                      <svg className="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-500 font-medium">Video demo del producto</p>
-                    <p className="text-gray-400 text-sm mt-1">Placeholder para video explicativo</p>
-                  </div>
-                </div>
-              </div>
-              {/* Decorative elements */}
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-orange-200 rounded-full blur-2xl opacity-60" />
-              <div className="absolute -top-4 -right-4 w-32 h-32 bg-purple-200 rounded-full blur-2xl opacity-60" />
-            </div>
           </div>
         </section>
 
@@ -337,7 +336,7 @@ const Home: React.FC = () => {
         <section className="py-16 border-y border-gray-100 bg-gray-50/50">
           <div className="max-w-7xl mx-auto px-4 lg:px-8">
             <p className="text-center text-sm font-medium text-gray-500 mb-8">
-              INTEGRAMOS CON LAS PLATAFORMAS MÁS USADAS
+              NOS ADAPTAMOS A TUS HERRAMIENTAS
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
               {[
@@ -363,10 +362,10 @@ const Home: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                Automatizaciones que ya funcionan
+                Soluciones que se adaptan a vos
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Flujos probados en e-commerces reales de Argentina. Implementamos los que más impacto tengan en tu negocio.
+                Cada negocio es único. Analizamos tu operación y diseñamos automatizaciones personalizadas para tu caso específico.
               </p>
             </div>
 
@@ -409,14 +408,16 @@ const Home: React.FC = () => {
                     </svg>
                   </button>
                 </div>
-                <div className="aspect-square rounded-2xl bg-white/50 border border-white/80 shadow-lg flex items-center justify-center">
-                  {/* Placeholder for feature illustration */}
-                  <div className="text-center p-8">
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-2xl bg-white shadow-lg flex items-center justify-center text-gray-600">
-                      {[icons.cart, icons.bot, icons.package, icons.creditCard][activeFeature]}
-                    </div>
-                    <p className="text-gray-500 font-medium">Ilustración del flujo</p>
-                    <p className="text-gray-400 text-sm mt-1">Placeholder para animación</p>
+                <div className="rounded-2xl bg-white/80 border border-white shadow-lg p-8">
+                  <h4 className={`${features[activeFeature].accent} font-bold text-xl mb-6`}>Impacto Directo</h4>
+                  <div className="space-y-6">
+                    {features[activeFeature].metrics.map((metric, idx) => (
+                      <div key={idx} className="border-l-4 border-gray-900 pl-4">
+                        <div className="text-4xl font-bold text-gray-900 mb-1">{metric.value}</div>
+                        <div className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-1">{metric.label}</div>
+                        <div className="text-sm text-gray-600">{metric.description}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -437,11 +438,11 @@ const Home: React.FC = () => {
                   </span>
                 </h2>
                 <p className="text-xl text-gray-600 mb-8">
-                  En vez de contratar más gente o pagar 5 herramientas diferentes, automatizamos todo en un solo lugar. Una solución, diseñada para tu negocio.
+                  En vez de contratar más equipo o pagar múltiples herramientas, diseñamos una solución de automatización personalizada que se integra con tus sistemas existentes.
                 </p>
                 <div className="space-y-4">
                   {[
-                    'Auditoría gratuita de tu e-commerce',
+                    'Auditoría gratuita de tu negocio',
                     'Solución 100% personalizada',
                     'Sin contratos largos',
                     'ROI medible desde el día 1'
@@ -498,30 +499,33 @@ const Home: React.FC = () => {
                 Lo que dicen nuestros clientes
               </h2>
               <p className="text-xl text-gray-400">
-                Resultados reales de e-commerces en Argentina
+                Resultados reales de empresas en Argentina
               </p>
             </div>
 
             {/* Featured testimonial */}
-            <div className="bg-gray-800 rounded-3xl p-8 lg:p-12 mb-8">
-              <div className="grid lg:grid-cols-2 gap-8 items-center">
-                <div>
-                  {/* Video placeholder */}
-                  <div className="aspect-video rounded-2xl bg-gray-700 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/10 flex items-center justify-center">
-                        <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                      <p className="text-gray-400">Video testimonial</p>
-                      <p className="text-gray-500 text-sm">Placeholder</p>
+            <div className="bg-gray-800 rounded-3xl p-8 lg:p-12 mb-8 overflow-hidden">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                {/* Giant Metric - Left Side */}
+                <div className="flex flex-col items-center justify-center text-center lg:border-r lg:border-gray-700 lg:pr-8">
+                  <div className="relative">
+                    {/* Decorative background circle */}
+                    <div className="absolute inset-0 bg-emerald-500/10 rounded-full blur-3xl scale-150"></div>
+                    {/* Main metric */}
+                    <div className="relative">
+                      <div className="text-7xl lg:text-8xl font-bold text-emerald-400 mb-4">-15h</div>
+                      <div className="text-xl lg:text-2xl font-semibold text-gray-300 mb-2">/semana</div>
                     </div>
                   </div>
+                  <p className="text-gray-400 text-sm lg:text-base mt-4 max-w-xs">
+                    Trabajo manual eliminado automáticamente
+                  </p>
                 </div>
+                
+                {/* Testimonial - Right Side */}
                 <div>
-                  <blockquote className="text-2xl lg:text-3xl font-medium mb-6">
-                    "Recuperamos más de $140,000 en 6 meses solo con el flujo de carritos abandonados. El ROI fue inmediato."
+                  <blockquote className="text-2xl lg:text-3xl font-medium mb-6 leading-relaxed">
+                    "La automatización eliminó <span className="text-emerald-400 font-bold">15 horas semanales</span> de trabajo manual. Ahora nuestro equipo se enfoca en lo que realmente importa."
                   </blockquote>
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center text-gray-300">
@@ -530,8 +534,8 @@ const Home: React.FC = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="font-semibold">Cliente Destacado</p>
-                      <p className="text-gray-400">E-commerce de Moda</p>
+                      <p className="font-semibold">Tomas Aguinaga</p>
+                      <p className="text-gray-400">CEO de Southdev</p>
                     </div>
                   </div>
                 </div>
@@ -551,7 +555,9 @@ const Home: React.FC = () => {
                     </div>
                     <div>
                       <p className="font-medium">{testimonial.author}</p>
-                      <p className="text-sm text-gray-400">{testimonial.role}, {testimonial.company}</p>
+                      <p className="text-sm text-gray-400">
+                        {testimonial.role}{testimonial.company ? `, ${testimonial.company}` : ''}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -567,8 +573,8 @@ const Home: React.FC = () => {
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
                 Todo lo que podés automatizar
               </h2>
-              <p className="text-xl text-gray-600">
-                Cada e-commerce es diferente. Elegimos los flujos que más impacto tengan en tu caso.
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Estos son solo algunos ejemplos. Nos especializamos en analizar tu negocio y diseñar <span className="text-gray-900 font-semibold">soluciones a medida</span> para tu industria, sin importar el nicho.
               </p>
             </div>
 
@@ -602,7 +608,7 @@ const Home: React.FC = () => {
               {[
                 {
                   q: '¿Cómo funciona la auditoría gratuita?',
-                  a: 'Agendás una llamada de 30 minutos donde analizamos tu negocio: plataformas, volumen, fricciones. Con esa info, armamos una propuesta personalizada.'
+                  a: 'Agendás una llamada de 30 minutos donde analizamos tu operación: procesos, herramientas, fricciones y oportunidades de automatización. Con esa info, armamos una propuesta personalizada.'
                 },
                 {
                   q: '¿Cuánto cuesta?',
@@ -613,8 +619,8 @@ const Home: React.FC = () => {
                   a: 'La mayoría de las implementaciones están funcionando en menos de 7 días. Nosotros hacemos todo lo técnico.'
                 },
                 {
-                  q: '¿Cuánto puedo recuperar en ventas perdidas?',
-                  a: 'Depende de tu volumen, pero nuestros clientes recuperan en promedio entre $30,000 y $150,000 mensuales solo con el flujo de carritos abandonados. En la auditoría te damos un estimado para tu caso.'
+                  q: '¿Trabajan con cualquier industria?',
+                  a: 'Sí. Hemos trabajado con e-commerce, servicios profesionales, salud, ventas, atención al cliente y más. Nuestro equipo se especializa en entender tu industria y adaptarse a tus necesidades específicas.'
                 },
                 {
                   q: '¿Necesito conocimientos técnicos?',
@@ -650,10 +656,10 @@ const Home: React.FC = () => {
             <h2 className="text-4xl lg:text-6xl font-bold mb-6">
               ¿Listo para automatizar
               <br />
-              tu e-commerce?
+              tu negocio?
             </h2>
             <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-              Agendá una auditoría gratuita de 30 minutos. Analizamos tu negocio y te mostramos exactamente qué podemos automatizar.
+              Agendá una auditoría gratuita de 30 minutos. Analizamos tus procesos y te mostramos exactamente qué podemos automatizar.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
@@ -679,89 +685,25 @@ const Home: React.FC = () => {
       </main>
 
       {/* Footer - Notion style multi-column */}
-      <footer className="bg-white border-t border-gray-100 py-16">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
-            {/* Brand column */}
-            <div className="col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <img src="/logo-sin-fondo-negro.png" alt="Operandi" className="h-8 w-auto" />
-                <span className="text-xl font-bold">Operandi</span>
-              </div>
-              <p className="text-gray-500 text-sm mb-4">
-                Agencia de automatización con IA para e-commerce.
-              </p>
-              <div className="flex items-center gap-3">
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
-                </a>
-                <a href="mailto:hola@operandi.ai" className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            {/* Soluciones */}
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Soluciones</h4>
-              <ul className="space-y-3 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Recuperación de Carritos</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Bot Mercado Libre</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Tracking Logístico</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Pagos Fallidos</a></li>
-              </ul>
-            </div>
-
-            {/* Recursos */}
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Recursos</h4>
-              <ul className="space-y-3 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Casos de Éxito</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">FAQ</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Documentación</a></li>
-              </ul>
-            </div>
-
-            {/* Integraciones */}
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Integraciones</h4>
-              <ul className="space-y-3 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900 transition-colors">TiendaNube</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Shopify</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Mercado Libre</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">WhatsApp Business</a></li>
-              </ul>
-            </div>
-
-            {/* Empresa */}
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Empresa</h4>
-              <ul className="space-y-3 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Sobre Nosotros</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Contacto</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Privacidad</a></li>
-                <li><a href="#" className="hover:text-gray-900 transition-colors">Términos</a></li>
-              </ul>
-            </div>
+      {/* Footer - Minimal Style */}
+      <footer className="bg-white border-t border-gray-100 py-12">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col items-center text-center">
+          {/* Identity */}
+          <div className="flex items-center gap-2 mb-4">
+            <img src="/logo-sin-fondo-negro.png" alt="Operandi" className="h-8 w-auto" />
+            <span className="text-xl font-bold text-gray-900">Operandi</span>
           </div>
 
-          {/* Bottom bar */}
-          <div className="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-gray-500">
-              © 2024 Operandi. Hecho con IA en Argentina.
-            </p>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
-              </svg>
-              <span>Español (Argentina)</span>
-            </div>
-          </div>
+          {/* Description */}
+          <p className="text-gray-500 max-w-md mx-auto mb-8">
+            Agencia de automatización con IA para empresas. 
+            Transformamos procesos manuales en sistemas autónomos.
+          </p>
+
+          {/* Copyright */}
+          <p className="text-sm text-gray-400">
+            © {new Date().getFullYear()} Operandi. Hecho con IA en Argentina.
+          </p>
         </div>
       </footer>
 
@@ -781,7 +723,7 @@ const Home: React.FC = () => {
                 <img src="/logo-sin-fondo-negro.png" alt="Operandi" className="h-8 w-auto" />
                 <div>
                   <span className="font-bold text-gray-900 block">Agendar Auditoría Gratuita</span>
-                  <span className="text-xs text-gray-500">30 min - Analizamos tu e-commerce</span>
+                  <span className="text-xs text-gray-500">30 min - Analizamos tu negocio</span>
                 </div>
               </div>
               <button
